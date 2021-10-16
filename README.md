@@ -1,4 +1,5 @@
 #CONFIG
+
 ##Plik odpowiedzialny za config - data.yml
 |Linijka|Opis|
 |------ |----|
