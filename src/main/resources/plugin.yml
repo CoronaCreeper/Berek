@@ -2,3 +2,5 @@ name: Berek
 version: '${project.version}'
 main: berek.Berek
 api-version: 1.17
+commands:
+  berek:

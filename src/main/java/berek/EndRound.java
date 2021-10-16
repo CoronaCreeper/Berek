@@ -57,12 +57,13 @@ public class EndRound extends TimerTask {
                 all.removePotionEffect(PotionEffectType.GLOWING));
         Bukkit.getOnlinePlayers().forEach(all ->
                 all.getInventory().clear());
-
-        Bukkit.getOnlinePlayers()
-                .stream().filter(OfflinePlayer::isOnline).filter(ServerOperator::isOp)
-                .forEach(all ->
-                        all.sendMessage(ChatColor.RED+"Użyj "+ChatColor.GREEN+"/reload"+ChatColor.RED+" by zagrać ponownie!")
-                );
+        yamlFile.set("berek", "none");
+        yamlFile.set("endTimer", 60);
+        try {
+            yamlFile.save(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         tokill.setHealth(0);
 
     }

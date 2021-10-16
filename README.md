@@ -1,5 +1,6 @@
-#CONFIG
-##Plik odpowiedzialny za config - data.yml
+CONFIG 
+
+Plik odpowiedzialny za config - data.yml
 |Linijka|Opis|
 |------ |----|
 |endTimer|Odpowiada za zmianę czasu trwania jednej rundy. Nie zmieniać po rozpoczęciu gry|
