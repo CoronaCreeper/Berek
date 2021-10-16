@@ -37,12 +37,6 @@ public class EndRound extends TimerTask {
                     new TextComponent(ChatColor.GREEN+"Do zakończenia gry pozostało "+ChatColor.RED+lastTime+" sekund!")));
         }else {
             EndGame();
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 
