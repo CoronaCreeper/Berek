@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +60,26 @@ public class Handler implements Listener {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                updateScoreBoard();
             }
         }
+    }
+
+    public void updateScoreBoard() {
+        File f = new File("plugins/Berek/data.yml");
+        YamlConfiguration yamlFile = YamlConfiguration.loadConfiguration(f);
+
+        ScoreboardManager manager = Bukkit.getScoreboardManager();
+        Scoreboard board = manager.getNewScoreboard();
+        Objective objective = board.registerNewObjective("Stats", "dummy");
+        objective.setDisplayName(ChatColor.LIGHT_PURPLE + "BEREK");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+
+        Score Berek = objective.getScore(ChatColor.GOLD + yamlFile.getString("berek"));
+        Berek.setScore(1);
+
+        Bukkit.getOnlinePlayers().forEach(all->
+                all.setScoreboard(board));
     }
 }

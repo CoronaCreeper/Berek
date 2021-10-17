@@ -2,6 +2,7 @@ package berek;
 
 import jdk.jfr.Frequency;
 import org.bukkit.*;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 
@@ -56,6 +59,7 @@ public class CommandHandler implements CommandExecutor {
                                     e.printStackTrace();
                                 }
 
+                                updateScoreBoard();
                                 Timer time = new Timer();
                                 time.schedule(new EndRound(), 0, 1000);
                             }
@@ -83,9 +87,14 @@ public class CommandHandler implements CommandExecutor {
                                 e.printStackTrace();
                             }
                             p.sendMessage(ChatColor.GREEN + "Ustawiono czas zakończenia gry na " + time + " sekund");
+                            Bukkit.broadcastMessage(ChatColor.GRAY+"Ustawiono czas zakończenia gry na "+ time + " sekund");
                         }
                         break;
 
+                    case "reboot":
+                        f.delete();
+                        Bukkit.reload();
+                        break;
                     default:
                         p.sendMessage(ChatColor.RED + "Niewłaściwy argument. Poprawne argumenty:\n/berek start\n/berek stop\n/berek timer");
                         break;
@@ -93,5 +102,23 @@ public class CommandHandler implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    public void updateScoreBoard() {
+        File f = new File("plugins/Berek/data.yml");
+        YamlConfiguration yamlFile = YamlConfiguration.loadConfiguration(f);
+
+        ScoreboardManager manager = Bukkit.getScoreboardManager();
+        Scoreboard board = manager.getNewScoreboard();
+        Objective objective = board.registerNewObjective("Stats", "dummy");
+        objective.setDisplayName(ChatColor.LIGHT_PURPLE + "BEREK");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+
+        Score Berek = objective.getScore(ChatColor.GOLD + yamlFile.getString("berek"));
+        Berek.setScore(1);
+
+        Bukkit.getOnlinePlayers().forEach(all->
+                all.setScoreboard(board));
     }
 }

@@ -1,6 +1,12 @@
 
 package berek;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -10,10 +16,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.Arrays;
 import java.util.List;
 
 public class Berek extends JavaPlugin implements Listener{
+
 
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents( this, this);
@@ -23,7 +31,7 @@ public class Berek extends JavaPlugin implements Listener{
         this.getCommand("berek").setTabCompleter(new TabCompleter() {
             @Override
             public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-                return Arrays.asList("start", "stop", "timer");
+                return Arrays.asList("start", "stop", "timer", "reboot");
             }
         });
 
@@ -36,9 +44,6 @@ public class Berek extends JavaPlugin implements Listener{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void onDisable() {
 
     }
 }
